@@ -74,7 +74,7 @@ func (o *Operation) MarshalJSON() ([]byte, error) {
 	jsonhelpers.SetIfNotNil(m, "requestBody", o.RequestBody)
 	jsonhelpers.SetIfMapNotEmpty(m, "callbacks", o.Callbacks)
 	jsonhelpers.SetIfTrue(m, "deprecated", o.Deprecated)
-	jsonhelpers.SetIfSliceNotEmpty(m, "security", o.Security)
+	jsonhelpers.SetIfNotNil(m, "security", o.Security)
 	jsonhelpers.SetIfSliceNotEmpty(m, "servers", o.Servers)
 	jsonhelpers.SetIfSliceNotEmpty(m, "consumes", o.Consumes)
 	jsonhelpers.SetIfSliceNotEmpty(m, "produces", o.Produces)
