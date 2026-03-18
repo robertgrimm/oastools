@@ -56,7 +56,7 @@ func (p *PathItem) UnmarshalJSON(data []byte) error {
 // inline maps like yaml:",inline".
 func (o *Operation) MarshalJSON() ([]byte, error) {
 	// Fast path: no Extra fields, use standard marshaling
-	if len(o.Extra) == 0 {
+	if len(o.Extra) == 0 && o.Security == nil {
 		type Alias Operation
 		return marshalToJSON((*Alias)(o))
 	}
@@ -74,7 +74,7 @@ func (o *Operation) MarshalJSON() ([]byte, error) {
 	jsonhelpers.SetIfNotNil(m, "requestBody", o.RequestBody)
 	jsonhelpers.SetIfMapNotEmpty(m, "callbacks", o.Callbacks)
 	jsonhelpers.SetIfTrue(m, "deprecated", o.Deprecated)
-	jsonhelpers.SetIfNotNil(m, "security", o.Security)
+	jsonhelpers.SetIfSliceNotNil(m, "security", o.Security)
 	jsonhelpers.SetIfSliceNotEmpty(m, "servers", o.Servers)
 	jsonhelpers.SetIfSliceNotEmpty(m, "consumes", o.Consumes)
 	jsonhelpers.SetIfSliceNotEmpty(m, "produces", o.Produces)

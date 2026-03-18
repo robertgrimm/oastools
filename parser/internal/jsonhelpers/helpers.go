@@ -216,6 +216,17 @@ func SetIfSliceNotEmpty[T any](m map[string]any, key string, value []T) {
 	}
 }
 
+// SetIfSliceNotNil sets a slice field in the map only if the slice is not nil.
+// Unlike SetIfSliceNotEmpty, this preserves the distinction between a nil slice
+// (omit the field) and an empty slice (include as []), which is semantically
+// significant for fields like security where [] explicitly overrides a
+// parent-level requirement.
+func SetIfSliceNotNil[T any](m map[string]any, key string, value []T) {
+	if value != nil {
+		m[key] = value
+	}
+}
+
 // SetIfMapNotEmpty sets a map field in the map only if the map has length > 0.
 // This is useful for MarshalJSON to avoid adding empty map fields.
 // Note: In Go, both nil maps and empty maps should be omitted from JSON output.
